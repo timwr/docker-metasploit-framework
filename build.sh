@@ -1,12 +1,11 @@
 #/bin/bash
 
 HOST=somehost
-DOCKER_TAG=gcr.io/something/metasploit-framework
+DOCKER_TAG=gcr.io/something/docker-metasploit-framework
 
 # build docker image
 docker build -t $DOCKER_TAG .
 docker tag $DOCKER_TAG $DOCKER_TAG
-gcloud docker -- pull $DOCKER_TAG
 gcloud docker -- push $DOCKER_TAG
 
 # create instance
